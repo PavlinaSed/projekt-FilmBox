@@ -103,4 +103,43 @@ const filmy = [
 			'Na zámek v podhůří Krkonoš přijíždí jeho nový majitel Štěpán se svojí snoubenkou, krásnou komtesou Blankou, a mladším bratrem Adamem. Cestou kočár nešťastně srazí kolemjdoucí dívku, Adam jí pomůže a ona se do něj zamiluje. Na zámku Adam objeví starou vlašskou knihu, která by měla obsahovat cestu k pokladům. Tajemné značky vlašské knihy však nedokáže vyluštit ani národopisec Jiráček, který v kraji sbírá pověsti a nevychází z údivu nad tím, že zdejší lidé stále věří v Krakonoše. Na zámku se objeví záhadný cizinec a nabídne Štěpánovi, že jej k pokladu za určitých podmínek dovede. Výprava do hor může začít. Naplní se Liduščina láska k Adamovi? Jakou záhadu skrývá starý obraz na zámku Hůrka a co strašlivého se v horách kdysi odehrálo? A kdo je vlastně Krakonoš a jaké je jeho největší tajemství? (csfd.cz, Česká televize)',
 		premiera: '2022-12-24',
 	},
+	{
+		id: 'pod-vlivem-uplnku',
+		nazev: 'Pod vlivem úplňku',
+		plakat: {
+			url: 'https://image.pmgstatic.com/cache/resized/w420/files/images/film/posters/159/016/159016434_135957.jpg',
+			sirka: 420,
+			vyska: 592,
+		},
+		ochutnavka: 'Americká romantická komedie oceněná třemi oskary.',
+		popis:
+			'Obchodník v nejlepších letech, Johnny Cammareri zcela nečekaně nabídne v restauraci sňatek ovdovělé účetní Loretě Castoriniové. Ta zcela zaskočena jeho nabídku přijímá. Tato výchozí situace rozehrává příběh, v němž se vše točí kolem lásky, milostných tužeb, záletů a partnerské věrnosti v jedné italskoamerické rodině. Vše jakoby ovlivňoval všemocný měsíc blížící se k svému úplňku, nečekanou důležitost v životě Lorety přitom pozvolna získává mladší bratr Johnnyho, pekař Ronny Cammareri... (csfd.cz)',
+		premiera: '1987-12-18',
+	},
 ]
+
+//UKOL 4 - seznam filmů
+const seznamFilmu = document.querySelector('#seznam-filmu');
+seznamFilmu.innerHTML = null;
+
+filmy.forEach((film) => {
+
+	seznamFilmu.innerHTML += `  
+	<div class="col">
+		<div class="card">
+			<img
+				src="${film.plakat.url}"
+				width="${film.plakat.sirka}"
+				height="${film.plakat.vyska}"
+				class="card-img-top"
+				alt="plakát"
+			/>
+			<div class="card-body">
+				<h5 class="card-title">${film.nazev}</h5>
+				<p class="card-text">${film.ochutnavka}</p>
+				<a href="film.html#${film.id}" class="btn btn-primary">Přehrát</a>
+			</div>
+		</div>
+	</div>
+	`
+}); 

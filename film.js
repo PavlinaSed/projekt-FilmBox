@@ -103,4 +103,98 @@ const filmy = [
 			'Na zámek v podhůří Krkonoš přijíždí jeho nový majitel Štěpán se svojí snoubenkou, krásnou komtesou Blankou, a mladším bratrem Adamem. Cestou kočár nešťastně srazí kolemjdoucí dívku, Adam jí pomůže a ona se do něj zamiluje. Na zámku Adam objeví starou vlašskou knihu, která by měla obsahovat cestu k pokladům. Tajemné značky vlašské knihy však nedokáže vyluštit ani národopisec Jiráček, který v kraji sbírá pověsti a nevychází z údivu nad tím, že zdejší lidé stále věří v Krakonoše. Na zámku se objeví záhadný cizinec a nabídne Štěpánovi, že jej k pokladu za určitých podmínek dovede. Výprava do hor může začít. Naplní se Liduščina láska k Adamovi? Jakou záhadu skrývá starý obraz na zámku Hůrka a co strašlivého se v horách kdysi odehrálo? A kdo je vlastně Krakonoš a jaké je jeho největší tajemství? (csfd.cz, Česká televize)',
 		premiera: '2022-12-24',
 	},
+	{
+		id: 'pod-vlivem-uplnku',
+		nazev: 'Pod vlivem úplňku',
+		plakat: {
+			url: 'https://image.pmgstatic.com/cache/resized/w420/files/images/film/posters/159/016/159016434_135957.jpg',
+			sirka: 420,
+			vyska: 592,
+		},
+		ochutnavka: 'Americká romantická komedie oceněná třemi oskary.',
+		popis:
+			'Obchodník v nejlepších letech, Johnny Cammareri zcela nečekaně nabídne v restauraci sňatek ovdovělé účetní Loretě Castoriniové. Ta zcela zaskočena jeho nabídku přijímá. Tato výchozí situace rozehrává příběh, v němž se vše točí kolem lásky, milostných tužeb, záletů a partnerské věrnosti v jedné italskoamerické rodině. Vše jakoby ovlivňoval všemocný měsíc blížící se k svému úplňku, nečekanou důležitost v životě Lorety přitom pozvolna získává mladší bratr Johnnyho, pekař Ronny Cammareri... (csfd.cz)',
+		premiera: '1987-12-18',
+	},
 ]
+
+//UKOL 5. a ukol 6.
+const detailFilmu = document.querySelector('#detail-filmu')
+const nazevFilmu = document.querySelector('.card-title')
+const popisFilmu = document.querySelector('.card-text')
+const plakatFilmu = document.querySelector('.col-md-5')
+const premieraElm = document.querySelector('#premiera')
+if (document.querySelector('#detail-filmu')) {
+	let vybranyFilmId = location.hash.slice(1)
+	filmy.forEach((film) => {
+		if (vybranyFilmId === film.id) {
+			nazevFilmu.textContent = `${film.nazev}`
+			popisFilmu.textContent = `${film.popis}`
+			plakatFilmu.innerHTML = `<img
+			src="${film.plakat.url}"
+			alt="plakát"
+			class="img-fluid rounded-start"
+			width="663"
+			height="909"
+		/>`
+
+		let datumPremiery = film.premiera
+			let dobaOdPremiery = dayjs(datumPremiery).diff(dayjs(), 'days')
+			premieraElm.innerHTML = `Premiéra <strong>${dayjs(datumPremiery).format('D.M.YYYY')}</strong>`
+			if (dobaOdPremiery < 0) {
+				if (dobaOdPremiery == -1) {
+					premieraElm.innerHTML += `, což bylo před ${String(dobaOdPremiery).slice(1)} dnem.`
+				} else if (dobaOdPremiery < -1) {
+					premieraElm.innerHTML += `, což bylo před ${String(dobaOdPremiery).slice(1)} dny.`
+				}
+			} else if (dobaOdPremiery >= 0) {
+				if (dobaOdPremiery == 0) {
+					premieraElm.innerHTML += `, což je dnes.`
+				} else if (dobaOdPremiery == 1) {
+					premieraElm.innerHTML += `, což bude za ${String(dobaOdPremiery)} den.`
+				} else if ((dobaOdPremiery >= 2 && dobaOdPremiery <= 4)) {
+					premieraElm.innerHTML += `, což bude za ${String(dobaOdPremiery)} dny.`
+				} else if (dobaOdPremiery > 4) {
+					premieraElm.innerHTML += `, což bude za ${String(dobaOdPremiery)} dnů.`
+				}
+			}
+		}
+	})
+};
+
+
+//UKOL 7
+const hvezdy = document.querySelectorAll('.fa-star')
+let ohodnoceno = 0
+const nastavHodnoceni = (pocetHvezd) => {
+	let i = 0
+	hvezdy.forEach((hvezda) => {
+		i += 1
+
+		if (i <= pocetHvezd) {
+			hvezda.classList.remove('far')
+			hvezda.classList.add('fas')
+		} else if (i > pocetHvezd) {
+			hvezda.classList.add('far')
+			hvezda.classList.remove('fas')
+		}
+	})
+}
+const hvezdaClick = (evt) => {
+	ohodnoceno = Number(evt.target.textContent)
+	nastavHodnoceni(ohodnoceno)
+}
+const hvezdaMouseEnter = (evt) => {
+	nastavHodnoceni(Number(evt.target.textContent))
+}
+const hvezdaMouseLeave = () => {
+	nastavHodnoceni(ohodnoceno)
+}
+hvezdy.forEach((hvezda) => {
+	hvezda.addEventListener('click', hvezdaClick)
+	hvezda.addEventListener('mouseenter', hvezdaMouseEnter)
+	hvezda.addEventListener('mouseleave', hvezdaMouseLeave)
+});
+
+
+
