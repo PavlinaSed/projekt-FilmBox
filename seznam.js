@@ -120,7 +120,7 @@ const filmy = [
 
 //UKOL 4 - seznam filmů
 const seznamFilmu = document.querySelector('#seznam-filmu');
-seznamFilmu.innerHTML = null;
+seznamFilmu.innerHTML = ``;
 
 filmy.forEach((film) => {
 

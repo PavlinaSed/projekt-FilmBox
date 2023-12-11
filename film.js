@@ -125,7 +125,7 @@ const popisFilmu = document.querySelector('.card-text')
 const plakatFilmu = document.querySelector('.col-md-5')
 const premieraElm = document.querySelector('#premiera')
 if (document.querySelector('#detail-filmu')) {
-	let vybranyFilmId = location.hash.slice(1)
+	let vybranyFilmId = location.hash.substring(1)
 	filmy.forEach((film) => {
 		if (vybranyFilmId === film.id) {
 			nazevFilmu.textContent = `${film.nazev}`
@@ -137,64 +137,54 @@ if (document.querySelector('#detail-filmu')) {
 			width="663"
 			height="909"
 		/>`
+		}
+	})
+}
 
+		if (document.querySelector('#detail-filmu')) {
+			let vybranyFilmId = location.hash.substring(1)
+			filmy.forEach((film) => {
+				if (vybranyFilmId === film.id) {
 		let datumPremiery = film.premiera
-			let dobaOdPremiery = dayjs(datumPremiery).diff(dayjs(), 'days')
+			let dniPoPremiere = dayjs(datumPremiery).diff(dayjs(), 'days')
 			premieraElm.innerHTML = `Premiéra <strong>${dayjs(datumPremiery).format('D.M.YYYY')}</strong>`
-			if (dobaOdPremiery < 0) {
-				if (dobaOdPremiery == -1) {
-					premieraElm.innerHTML += `, což bylo před ${String(dobaOdPremiery).slice(1)} dnem.`
-				} else if (dobaOdPremiery < -1) {
-					premieraElm.innerHTML += `, což bylo před ${String(dobaOdPremiery).slice(1)} dny.`
+			if (dniPoPremiere < 0) {
+				if (dniPoPremiere == -1) {
+					premieraElm.innerHTML += `, což bylo před ${String(dniPoPremiere).slice(1)} dnem.`
+				} else if (dniPoPremiere < -1) {
+					premieraElm.innerHTML += `, což bylo před ${String(dniPoPremiere).slice(1)} dny.`
 				}
-			} else if (dobaOdPremiery >= 0) {
-				if (dobaOdPremiery == 0) {
+			} else if (dniPoPremiere >= 0) {
+				if (dniPoPremiere == 0) {
 					premieraElm.innerHTML += `, což je dnes.`
-				} else if (dobaOdPremiery == 1) {
-					premieraElm.innerHTML += `, což bude za ${String(dobaOdPremiery)} den.`
-				} else if ((dobaOdPremiery >= 2 && dobaOdPremiery <= 4)) {
-					premieraElm.innerHTML += `, což bude za ${String(dobaOdPremiery)} dny.`
-				} else if (dobaOdPremiery > 4) {
-					premieraElm.innerHTML += `, což bude za ${String(dobaOdPremiery)} dnů.`
+				} else if (dniPoPremiere == 1) {
+					premieraElm.innerHTML += `, což bude za ${String(dniPoPremiere)} den.`
+				} else if ((dniPoPremiere >= 2 && dniPoPremiere <= 4)) {
+					premieraElm.innerHTML += `, což bude za ${String(dniPoPremiere)} dny.`
+				} else if (dniPoPremiere > 4) {
+					premieraElm.innerHTML += `, což bude za ${String(dniPoPremiere)} dnů.`
 				}
 			}
 		}
 	})
-};
+}
+
 
 
 //UKOL 7
-const hvezdy = document.querySelectorAll('.fa-star')
+const hodnoceni = document.querySelectorAll('.fa-star')
 let ohodnoceno = 0
-const nastavHodnoceni = (pocetHvezd) => {
+const nastavHodnoceni = (pocetHvezdicek) => {
 	let i = 0
-	hvezdy.forEach((hvezda) => {
+	hodnoceni.forEach((hvezdicka) => {
 		i += 1
 
-		if (i <= pocetHvezd) {
-			hvezda.classList.remove('far')
-			hvezda.classList.add('fas')
-		} else if (i > pocetHvezd) {
-			hvezda.classList.add('far')
-			hvezda.classList.remove('fas')
+		if (i <= pocetHvezdicek) {
+			hvezdicka.classList.remove('far')
+			hvezdicka.classList.add('fas')
+		} else if (i > pocetHvezdicek) {
+			hvezdicka.classList.add('far')
+			hvezdicka.classList.remove('fas')
 		}
 	})
 }
-const hvezdaClick = (evt) => {
-	ohodnoceno = Number(evt.target.textContent)
-	nastavHodnoceni(ohodnoceno)
-}
-const hvezdaMouseEnter = (evt) => {
-	nastavHodnoceni(Number(evt.target.textContent))
-}
-const hvezdaMouseLeave = () => {
-	nastavHodnoceni(ohodnoceno)
-}
-hvezdy.forEach((hvezda) => {
-	hvezda.addEventListener('click', hvezdaClick)
-	hvezda.addEventListener('mouseenter', hvezdaMouseEnter)
-	hvezda.addEventListener('mouseleave', hvezdaMouseLeave)
-});
-
-
-
